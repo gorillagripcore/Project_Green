@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Project Green</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <button class="theme-toggle" id="themeToggle">Light</button>
+
+  <h1>Project Green</h1>
+
+  <hr class="divider">
+
+  <div class="instructions">
+    <h2>DVD Screen Waker</h2>
+  </div>
+
+  <div class="jiggle-area" id="jiggleArea">
+    <div class="dot" id="dot"></div>
+  </div>
+
+  <button class="btn" id="toggleBtn">Start</button>
+
+  <div class="status">Press <span>Enter</span> or click to toggle</div>
+  <div class="wake-status" id="wakeStatus">Screen wake lock: unavailable</div>
+
+  <hr class="divider">
+
+  <div class="ps-wrapper">
+  <div class="instructions">
+    <h2>Cursor &ldquo;Animation&rdquo; 👀</h2>
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-text">Click <code>Copy</code> below, open Notepad, paste, then save as <code>exercise1.ps1</code> (set file type to <code>All Files</code> so it doesn't save as <code>.txt</code>).</div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-text">Right-click the file and select <code>Run with PowerShell</code>.</div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-text">To stop it, click the PowerShell window and press <code>Ctrl+C</code>.</div>
+    </div>
+  </div>
+  <a class="download-link" href="exercise1.ps1" download="exercise1.ps1">download here, if you dare</a>
+
+  <div class="ps-section">
+    <div class="ps-titlebar">
+      <div class="ps-titlebar-left">
+        <div class="ps-dot"></div>
+        <div class="ps-dot"></div>
+        <div class="ps-dot"></div>
+        <span class="ps-title">exercise1.ps1</span>
+      </div>
+      <button class="copy-btn" id="copyBtn">Copy</button>
+    </div>
+    <div class="ps-code" id="psCode"><span class="ps-cmdlet">Add-Type</span> <span class="ps-param">-AssemblyName</span> <span class="ps-string">System.Windows.Forms</span>
+
+<span class="ps-var">$radius</span> <span class="ps-op">=</span> <span class="ps-number">100</span>   <span class="ps-comment"># pixels from center</span>
+<span class="ps-var">$steps</span>  <span class="ps-op">=</span> <span class="ps-number">60</span>   <span class="ps-comment"># points per full rotation</span>
+<span class="ps-var">$delay</span>  <span class="ps-op">=</span> <span class="ps-number">30</span>   <span class="ps-comment"># ms per step (~1.8s per loop)</span>
+
+<span class="ps-cmdlet">Write-Host</span> <span class="ps-string">"Exercise 1: cursor animation running. Press Ctrl+C to stop."</span>
+<span class="ps-cmdlet">Write-Host</span> <span class="ps-string">"Moving in a circle (radius: <span class="ps-var">$radius</span> px)`n"</span>
+
+<span class="ps-var">$origin</span> <span class="ps-op">=</span> [<span class="ps-type">System.Windows.Forms.Cursor</span>]::Position
+<span class="ps-var">$i</span> <span class="ps-op">=</span> <span class="ps-number">0</span>
+
+<span class="ps-keyword">while</span> (<span class="ps-var">$true</span>) {
+    <span class="ps-var">$angle</span> <span class="ps-op">=</span> <span class="ps-number">2</span> <span class="ps-op">*</span> [<span class="ps-type">Math</span>]::PI <span class="ps-op">*</span> <span class="ps-var">$i</span> <span class="ps-op">/</span> <span class="ps-var">$steps</span>
+    <span class="ps-var">$x</span> <span class="ps-op">=</span> [<span class="ps-type">int</span>](<span class="ps-var">$origin</span>.X <span class="ps-op">+</span> <span class="ps-var">$radius</span> <span class="ps-op">*</span> [<span class="ps-type">Math</span>]::Cos(<span class="ps-var">$angle</span>))
+    <span class="ps-var">$y</span> <span class="ps-op">=</span> [<span class="ps-type">int</span>](<span class="ps-var">$origin</span>.Y <span class="ps-op">+</span> <span class="ps-var">$radius</span> <span class="ps-op">*</span> [<span class="ps-type">Math</span>]::Sin(<span class="ps-var">$angle</span>))
+    [<span class="ps-type">System.Windows.Forms.Cursor</span>]::Position <span class="ps-op">=</span> [<span class="ps-type">System.Drawing.Point</span>]::new(<span class="ps-var">$x</span>, <span class="ps-var">$y</span>)
+    <span class="ps-cmdlet">Start-Sleep</span> <span class="ps-param">-Milliseconds</span> <span class="ps-var">$delay</span>
+    <span class="ps-var">$i</span> <span class="ps-op">=</span> (<span class="ps-var">$i</span> <span class="ps-op">+</span> <span class="ps-number">1</span>) <span class="ps-op">%</span> <span class="ps-var">$steps</span>
+
+    <span class="ps-keyword">if</span> (<span class="ps-var">$i</span> <span class="ps-op">-eq</span> <span class="ps-number">0</span>) {
+        <span class="ps-var">$time</span> <span class="ps-op">=</span> <span class="ps-cmdlet">Get-Date</span> <span class="ps-param">-Format</span> <span class="ps-string">"HH:mm:ss"</span>
+        <span class="ps-cmdlet">Write-Host</span> <span class="ps-string">"[<span class="ps-var">$time</span>] Loop"</span>
+    }
+}</div>
+  </div>
+  </div>
+
+  <script>
+    const btn = document.getElementById('toggleBtn');
+    const dot = document.getElementById('dot');
+    const area = document.getElementById('jiggleArea');
+    const wakeStatusEl = document.getElementById('wakeStatus');
+
+    let running = false;
+    let animFrame = null;
+    let wakeLock = null;
+
+    // Lissajous-style path params
+    const dvdColors = ['#4ade80', '#60a5fa', '#f472b6', '#fb923c', '#a78bfa', '#fbbf24'];
+    let dvdX, dvdY, dvdVx, dvdVy, dvdColorIdx;
+    const DOT = 18;
+    const HALF = DOT / 2;
+
+    function jiggle() {
+      dvdX += dvdVx;
+      dvdY += dvdVy;
+
+      const maxX = area.clientWidth  - HALF;
+      const maxY = area.clientHeight - HALF;
+
+      let bounced = false;
+      if (dvdX <= HALF)  { dvdX = HALF;  dvdVx = Math.abs(dvdVx); bounced = true; }
+      if (dvdX >= maxX)  { dvdX = maxX;  dvdVx = -Math.abs(dvdVx); bounced = true; }
+      if (dvdY <= HALF)  { dvdY = HALF;  dvdVy = Math.abs(dvdVy); bounced = true; }
+      if (dvdY >= maxY)  { dvdY = maxY;  dvdVy = -Math.abs(dvdVy); bounced = true; }
+
+      if (bounced) {
+        dvdColorIdx = (dvdColorIdx + 1) % dvdColors.length;
+        dot.style.background   = dvdColors[dvdColorIdx];
+        dot.style.boxShadow    = `0 0 16px ${dvdColors[dvdColorIdx]}88`;
+      }
+
+      dot.style.left      = dvdX + 'px';
+      dot.style.top       = dvdY + 'px';
+      dot.style.transform = 'translate(-50%, -50%)';
+      animFrame = requestAnimationFrame(jiggle);
+    }
+
+    async function acquireWakeLock() {
+      if (!('wakeLock' in navigator)) {
+        wakeStatusEl.textContent = 'Screen wake lock: not supported by browser';
+        return;
+      }
+      try {
+        wakeLock = await navigator.wakeLock.request('screen');
+        wakeStatusEl.textContent = 'Screen wake lock: active';
+        wakeStatusEl.className = 'wake-status on';
+        wakeLock.addEventListener('release', () => {
+          wakeStatusEl.textContent = 'Screen wake lock: released';
+          wakeStatusEl.className = 'wake-status';
+        });
+      } catch (e) {
+        wakeStatusEl.textContent = `Screen wake lock: failed (${e.message})`;
+      }
+    }
+
+    async function releaseWakeLock() {
+      if (wakeLock) {
+        await wakeLock.release();
+        wakeLock = null;
+        wakeStatusEl.textContent = 'Screen wake lock: off';
+        wakeStatusEl.className = 'wake-status';
+      }
+    }
+
+    async function toggle() {
+      running = !running;
+
+      if (running) {
+        btn.textContent = 'Stop';
+        btn.classList.add('running');
+        area.classList.add('active');
+        dvdX = area.clientWidth / 2;
+        dvdY = area.clientHeight / 2;
+        dvdVx = 1.4;
+        dvdVy = 1.0;
+        dvdColorIdx = 0;
+        dot.style.background = dvdColors[0];
+        dot.style.boxShadow  = `0 0 16px ${dvdColors[0]}88`;
+        jiggle();
+        await acquireWakeLock();
+      } else {
+        btn.textContent = 'Start';
+        btn.classList.remove('running');
+        area.classList.remove('active');
+        cancelAnimationFrame(animFrame);
+        dot.style.left       = '50%';
+        dot.style.top        = '50%';
+        dot.style.transform  = 'translate(-50%, -50%)';
+        dot.style.background = '';
+        dot.style.boxShadow  = '';
+        await releaseWakeLock();
+      }
+    }
+
+    // Re-acquire wake lock if tab becomes visible again
+    document.addEventListener('visibilitychange', async () => {
+      if (running && document.visibilityState === 'visible') {
+        await acquireWakeLock();
+      }
+    });
+
+    btn.addEventListener('click', toggle);
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        toggle();
+      }
+    });
+
+    // Theme toggle
+    const themeToggle = document.getElementById('themeToggle');
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'light') {
+      document.body.classList.add('light');
+      themeToggle.textContent = 'Dark';
+    }
+    themeToggle.addEventListener('click', () => {
+      const isLight = document.body.classList.toggle('light');
+      themeToggle.textContent = isLight ? 'Dark' : 'Light';
+      localStorage.setItem('theme', isLight ? 'light' : 'dark');
+    });
+
+    // Copy button — strips HTML tags to get plain text
+    const copyBtn = document.getElementById('copyBtn');
+    const psCodeEl = document.getElementById('psCode');
+
+    copyBtn.addEventListener('click', () => {
+      const plain = psCodeEl.innerText;
+      navigator.clipboard.writeText(plain).then(() => {
+        copyBtn.textContent = 'Copied!';
+        copyBtn.classList.add('copied');
+        setTimeout(() => {
+          copyBtn.textContent = 'Copy';
+          copyBtn.classList.remove('copied');
+        }, 2000);
+      });
+    });
+  </script>
+</body>
+</html>

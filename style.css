@@ -1,0 +1,333 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  transition: background-color 0.2s, color 0.2s, border-color 0.2s;
+}
+
+/* ── Themes ── */
+:root {
+  --bg:          #0a1a0d;
+  --bg-2:        #112016;
+  --bg-3:        #0d1a10;
+  --border:      #1e3324;
+  --border-2:    #162b1e;
+  --border-3:    #1a2e20;
+  --text:        #d4e8d8;
+  --text-muted:  #7aab85;
+  --text-dim:    #3d6b4a;
+  --text-dim-2:  #4e7a5a;
+  --text-dim-3:  #5a8a66;
+  --text-code:   #6a9a76;
+  --wake-off:    #2a4a32;
+  --dot-idle:    #2a4a32;
+  --ps-dot:      #2a4a32;
+
+  --syn-keyword: #569cd6;
+  --syn-cmdlet:  #4ec9b0;
+  --syn-param:   #9cdcfe;
+  --syn-string:  #ce9178;
+  --syn-number:  #b5cea8;
+  --syn-comment: #4a6e52;
+  --syn-type:    #4ec9b0;
+  --syn-var:     #9cdcfe;
+  --syn-op:      #adbfb2;
+}
+
+body.light {
+  --bg:          #f5f5f5;
+  --bg-2:        #e8e8e8;
+  --bg-3:        #efefef;
+  --border:      #d0d0d0;
+  --border-2:    #ddd;
+  --border-3:    #ccc;
+  --text:        #1a1a1a;
+  --text-muted:  #555;
+  --text-dim:    #888;
+  --text-dim-2:  #666;
+  --text-dim-3:  #777;
+  --text-code:   #444;
+  --wake-off:    #bbb;
+  --dot-idle:    #ccc;
+  --ps-dot:      #bbb;
+
+  --syn-keyword: #0055cc;
+  --syn-cmdlet:  #0e7a5a;
+  --syn-param:   #0366d6;
+  --syn-string:  #b34b00;
+  --syn-number:  #2a6e2a;
+  --syn-comment: #6a6a6a;
+  --syn-type:    #0e7a5a;
+  --syn-var:     #0550ae;
+  --syn-op:      #333;
+}
+
+/* ── Layout ── */
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 60px 24px;
+  gap: 32px;
+  transition: background 0.2s, color 0.2s;
+}
+
+/* ── Theme toggle ── */
+.theme-toggle {
+  position: fixed;
+  top: 18px;
+  right: 20px;
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 5px 10px;
+  font-size: 0.75rem;
+  color: var(--text-dim);
+  cursor: pointer;
+  letter-spacing: 0.06em;
+  transition: all 0.2s;
+}
+
+.theme-toggle:hover { border-color: var(--text-dim-2); color: var(--text-muted); }
+
+/* ── Heading ── */
+h1 {
+  font-size: 1.4rem;
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+
+/* ── DVD bounce area ── */
+.jiggle-area {
+  width: 300px;
+  height: 160px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  position: relative;
+  overflow: hidden;
+}
+
+.dot {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--dot-idle);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  transition: background 0.15s;
+}
+
+/* ── Main button ── */
+.btn {
+  padding: 14px 48px;
+  font-size: 1rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--bg-2);
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all 0.2s;
+  outline: none;
+}
+
+.btn:hover { border-color: var(--text-dim-2); color: var(--text); }
+
+.btn.running {
+  border-color: #4ade80;
+  color: #4ade80;
+  background: #0d2a1a;
+}
+
+body.light .btn.running {
+  border-color: #ef4444;
+  color: #ef4444;
+  background: #fef2f2;
+}
+
+/* ── Status lines ── */
+.status {
+  font-size: 0.85rem;
+  color: var(--text-dim);
+  letter-spacing: 0.05em;
+}
+
+.status span { color: var(--text-dim-3); }
+
+.wake-status {
+  font-size: 0.75rem;
+  color: var(--wake-off);
+}
+
+.wake-status.on { color: #4ade8088; }
+body.light .wake-status.on { color: #16a34a; }
+
+/* ── Divider ── */
+.divider {
+  width: 100%;
+  max-width: 640px;
+  border: none;
+  border-top: 1px solid var(--border-2);
+}
+
+/* ── Instructions ── */
+.instructions {
+  width: 100%;
+  max-width: 640px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.instructions h2 {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--text-dim);
+  margin-bottom: 12px;
+  text-align: center;
+}
+
+.instructions h2:only-child {
+  margin-bottom: 0;
+}
+
+.step {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+}
+
+.step-num {
+  min-width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  font-size: 0.7rem;
+  color: var(--text-dim-2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1px;
+}
+
+.step-text {
+  font-size: 0.82rem;
+  color: var(--text-dim-2);
+  line-height: 1.5;
+}
+
+.step-text code {
+  font-family: 'Consolas', 'Courier New', monospace;
+  background: var(--bg-2);
+  border: 1px solid var(--border-3);
+  border-radius: 3px;
+  padding: 1px 6px;
+  color: var(--text-code);
+  font-size: 0.8rem;
+}
+
+/* ── Code block ── */
+.ps-wrapper {
+  width: 100%;
+  max-width: 640px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.ps-section {
+  width: 100%;
+  max-width: 640px;
+  border: 1px solid var(--border-2);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.ps-titlebar {
+  background: var(--bg-2);
+  border-bottom: 1px solid var(--border-3);
+  padding: 8px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.ps-titlebar-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ps-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--ps-dot);
+}
+
+.ps-title {
+  font-size: 0.75rem;
+  color: var(--text-dim);
+  font-family: 'Consolas', 'Courier New', monospace;
+}
+
+.copy-btn {
+  font-size: 0.7rem;
+  color: var(--text-dim);
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 3px 10px;
+  cursor: pointer;
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  letter-spacing: 0.04em;
+  transition: all 0.15s;
+}
+
+.copy-btn:hover { border-color: var(--text-dim-2); color: var(--text-muted); }
+.copy-btn.copied { border-color: #4ade8066; color: #4ade80; }
+body.light .copy-btn { color: #555; border-color: #bbb; }
+body.light .copy-btn:hover { border-color: #888; color: #333; }
+
+.ps-code {
+  background: var(--bg-3);
+  padding: 20px;
+  font-family: 'Consolas', 'Courier New', monospace;
+  font-size: 0.82rem;
+  line-height: 1.7;
+  overflow-x: auto;
+  white-space: pre;
+}
+
+/* ── Download link ── */
+.download-link {
+  font-size: 0.7rem;
+  color: var(--text-dim);
+  text-decoration: none;
+  letter-spacing: 0.08em;
+  text-align: center;
+  opacity: 0.6;
+}
+
+.download-link:hover { color: var(--text-muted); opacity: 1; }
+
+/* Syntax colours — swap with theme */
+.ps-keyword { color: var(--syn-keyword); }
+.ps-cmdlet  { color: var(--syn-cmdlet);  }
+.ps-param   { color: var(--syn-param);   }
+.ps-string  { color: var(--syn-string);  }
+.ps-number  { color: var(--syn-number);  }
+.ps-comment { color: var(--syn-comment); font-style: italic; }
+.ps-type    { color: var(--syn-type);    }
+.ps-var     { color: var(--syn-var);     }
+.ps-op      { color: var(--syn-op);      }
